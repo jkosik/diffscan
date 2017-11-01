@@ -1,0 +1,6 @@
+configs/*
+!configs/test.conf
+history/*
+outputs/*
+!outputs/test.out
+!outputs/test.out.old
