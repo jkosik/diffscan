@@ -1,9 +1,12 @@
 configs/*
 !configs/test.conf
+
 history/*
 !history/placeholder
+
 outputs/*
 !outputs/test.out
 !outputs/test.out.old
-vault/vault.py
-vault/vault.pyc
+
+vault/*
+!vault/vault.py-sample

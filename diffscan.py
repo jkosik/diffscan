@@ -43,19 +43,21 @@ def compare(target):
             for i in non_empty_stripped_diff:
                 print("-", i)
 
+            '''print for slack'''
             text = "*Previously unseen records found!*\n"
             for i in non_empty_stripped_diff:
                 text += ("- " + i + "\n")
-            print(text)
+            text += "*Full scan results:*\n"
+            for i in newfile:
+                text += (i)
             url = SLACK_WEBHOOK
-            data = "{'channel':'#secbots', 'username':'DIFFSCAN', 'text':{0}, 'icon_emoji':':pentest:'}".format(text)
-            #data = {"channel":"#secbots", "username":"DIFFSCAN", "text":text, "icon_emoji":":pentest:"}
+            data = {"channel":"#secbots", "username":"DIFFSCAN", "text":text, "icon_emoji":":pentest:"}
             headers = {'Content-type': 'application/json'}
             r = requests.post(url, data=json.dumps(data), headers=headers)
-
         else:
             print("No new records found in the last scan.")
-
+            
+            '''print for slack'''
             url = SLACK_WEBHOOK
             data = {"channel":"#secbots", "username":"DIFFSCAN", "text":"No new records found this time.","icon_emoji":":pentest:"}
             headers = {'Content-type': 'application/json'}
@@ -64,10 +66,7 @@ def compare(target):
     else:
         print("Older scan results not found. Nothing to compare.")
 
-###^ ked pribudne v .out, najde rozdiel. ak odpbudne v .out, rozdiel nenajde. hlada len to, co pribudlo v new (.out)
-
-
-#cleanup - keep only latest(actual) results in /outputs, e.g. ['test.out', 'as1234'.out]. Versioned old files are not needed after diff. Removing them...
+#cleanup - keep only latest(actual) results in /outputs. Versioned old files are not needed after diff. Moving them to /history...
 def remove_mess():
     to_archive = [i + ".out.old" for i in targets] #list of files to archive
     for file in os.listdir("outputs"):
