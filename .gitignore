@@ -1,6 +1,7 @@
 configs/*
 !configs/test.conf
 history/*
+!history/placeholder
 outputs/*
 !outputs/test.out
 !outputs/test.out.old

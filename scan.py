@@ -45,7 +45,7 @@ def compare(target):
 ###^ ked pribudne v .out, najde rozdiel. ak odpbudne v .out, rozdiel nenajde. hlada len to, co pribudlo v new (.out)
 
 
-#cleanup - keep only latest(actual) results in /outputs, e.g. ['as1902.out', 'test.out', 'mt'.out]. Versioned old files are not needed after diff. Removing them...
+#cleanup - keep only latest(actual) results in /outputs, e.g. ['test.out', 'as1234'.out]. Versioned old files are not needed after diff. Removing them...
 def remove_mess():
     to_archive = [i + ".out.old" for i in targets] #list of files to archive
     for file in os.listdir("outputs"):
@@ -59,20 +59,23 @@ def remove_mess():
 
 ### EXEC
 
-#create list of targets based on filenames in /config, e.g. ['as1902', 'test', 'mt']
+#create list of targets based on filenames in /config, e.g. ['test', 'as1234']
 targets = []
 for conf in os.listdir("configs"):
     name, extension = os.path.splitext(conf)
     targets.append(name)
 print("Configs defined: ", targets)
 
-#version_files()
+version_files()
 print("Dir /outpus after versioning: ",os.listdir("outputs"))
 
-#scan('test')
+scan('jk')
 print("Dir /outputs after scan: ",os.listdir("outputs"))
 
-compare('test')
+compare('jk')
 
-#remove_mess()
+remove_mess()
 print("Dir /outputs after cleanup: ",os.listdir("outputs"))
+
+
+
