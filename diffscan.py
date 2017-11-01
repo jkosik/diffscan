@@ -38,16 +38,17 @@ def compare(target):
         stripped_diff = [s.rstrip() for s in diff] #strip new lines
         non_empty_stripped_diff = list(filter(None, stripped_diff)) #filter out elements evaluated to False (e.g. empty elements)
 #        print(non_empty_stripped_diff)
-        if len(non_empty_stripped_diff): #if list empty
-            print("Previously unseen records found: ")
+        if len(non_empty_stripped_diff): #if diff list is not empty
+            print("Target - {0}: Previously unseen records found".format(target))
             for i in non_empty_stripped_diff:
                 print("-", i)
 
             '''print for slack'''
-            text = "*Previously unseen records found!*\n"
+            text = "*Target - {0}: Previously unseen records found!*\n".format(target)
             for i in non_empty_stripped_diff:
                 text += ("- " + i + "\n")
-            text += "*Full scan results:*\n"
+
+            text += "*Target - {0}: Full scan results:*\n".format(target)
             for i in newfile:
                 text += (i)
             url = SLACK_WEBHOOK
@@ -55,16 +56,28 @@ def compare(target):
             headers = {'Content-type': 'application/json'}
             r = requests.post(url, data=json.dumps(data), headers=headers)
         else:
-            print("No new records found in the last scan.")
+            print("Target - {0}: No new records found in the last scan.".format(target))
             
             '''print for slack'''
             url = SLACK_WEBHOOK
-            data = {"channel":"#secbots", "username":"DIFFSCAN", "text":"No new records found this time.","icon_emoji":":pentest:"}
+            text_nonew = "*Target - {0}:* No new records found in the last scan.".format(target)
+            data = {"channel":"#secbots", "username":"DIFFSCAN", "text":text_nonew, "icon_emoji":":pentest:"}
             headers = {'Content-type': 'application/json'}
             r = requests.post(url, data=json.dumps(data), headers=headers)
 
     else:
         print("Older scan results not found. Nothing to compare.")
+
+        '''print for slack'''
+        text = "*Target - {0}*: Nothing to compare yet. Full scan results:\n".format(target)
+        with open (new, "r") as myfile2:
+            newfile=myfile2.readlines()
+        for i in newfile:
+            text += (i)
+        url = SLACK_WEBHOOK
+        data = {"channel":"#secbots", "username":"DIFFSCAN", "text":text, "icon_emoji":":pentest:"}
+        headers = {'Content-type': 'application/json'}
+        r = requests.post(url, data=json.dumps(data), headers=headers)
 
 #cleanup - keep only latest(actual) results in /outputs. Versioned old files are not needed after diff. Moving them to /history...
 def remove_mess():
@@ -72,7 +85,7 @@ def remove_mess():
     for file in os.listdir("outputs"):
         if file in to_archive:
             os.rename("outputs/"+file, "history/"+file+str(time.time()))
-    to_keep = [i + ".out" for i in targets] #lsit of files to keep in /outputs for next round
+    to_keep = [i + ".out" for i in targets] #list of files to keep in /outputs for next round
     for file in os.listdir("outputs"):
         if file not in to_keep:
             os.remove("outputs/"+file)
@@ -92,6 +105,8 @@ print("Dir /outputs after versioning: ",os.listdir("outputs"))
 
 scan('jk')
 compare('jk')
+scan('as1902')
+compare('as1902')
 
 remove_mess()
 print("Dir /outputs after cleanup: ",os.listdir("outputs"))
