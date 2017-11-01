@@ -5,3 +5,5 @@ history/*
 outputs/*
 !outputs/test.out
 !outputs/test.out.old
+vault/vault.py
+vault/vault.pyc

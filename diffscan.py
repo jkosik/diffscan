@@ -1,9 +1,14 @@
 #!/usr/bin/python3
 
+import sys
+sys.path.insert(0, './vault')
+from vault import *
 import subprocess
 import shlex
 import os
 import time
+import requests
+import json
 
 #rename last scan result to xxx.old 
 def version_files():
@@ -29,16 +34,33 @@ def compare(target):
             newfile=myfile2.readlines()
         oldfile_nocomments = [x for x in oldfile if not x.startswith('#')]
         newfile_nocomments = [x for x in newfile if not x.startswith('#')]
-        diff = list(set(newfile_nocomments) - set(oldfile_nocomments)) #diff new old
+        diff = list(set(newfile_nocomments) - set(oldfile_nocomments)) #diff new and old
         stripped_diff = [s.rstrip() for s in diff] #strip new lines
-        non_empty_stripped_diff = list(filter(None, stripped_diff)) #filter elements evaluated to False (e.g. empty elements)
+        non_empty_stripped_diff = list(filter(None, stripped_diff)) #filter out elements evaluated to False (e.g. empty elements)
 #        print(non_empty_stripped_diff)
         if len(non_empty_stripped_diff): #if list empty
             print("Previously unseen records found: ")
             for i in non_empty_stripped_diff:
                 print("-", i)
+
+            text = "*Previously unseen records found!*\n"
+            for i in non_empty_stripped_diff:
+                text += ("- " + i + "\n")
+            print(text)
+            url = SLACK_WEBHOOK
+            data = "{'channel':'#secbots', 'username':'DIFFSCAN', 'text':{0}, 'icon_emoji':':pentest:'}".format(text)
+            #data = {"channel":"#secbots", "username":"DIFFSCAN", "text":text, "icon_emoji":":pentest:"}
+            headers = {'Content-type': 'application/json'}
+            r = requests.post(url, data=json.dumps(data), headers=headers)
+
         else:
             print("No new records found in the last scan.")
+
+            url = SLACK_WEBHOOK
+            data = {"channel":"#secbots", "username":"DIFFSCAN", "text":"No new records found this time.","icon_emoji":":pentest:"}
+            headers = {'Content-type': 'application/json'}
+            r = requests.post(url, data=json.dumps(data), headers=headers)
+
     else:
         print("Older scan results not found. Nothing to compare.")
 
@@ -64,10 +86,10 @@ targets = []
 for conf in os.listdir("configs"):
     name, extension = os.path.splitext(conf)
     targets.append(name)
-print("Configs defined: ", targets)
+print("Configs available: ", targets)
 
 version_files()
-print("Dir /outpus after versioning: ",os.listdir("outputs"))
+print("Dir /outputs after versioning: ",os.listdir("outputs"))
 
 scan('jk')
 print("Dir /outputs after scan: ",os.listdir("outputs"))

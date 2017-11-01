@@ -1,4 +1,0 @@
-# Masscan 1.0.4 scan initiated Fri Oct 27 20:02:40 2017
-# Ports scanned: TCP(5;1001-1005) UDP(0;) SCTP(0;) PROTOCOLS(0;)
-Host: 10.154.0.3 ()	Ports: 1001/open/tcp////
-# Masscan done at Fri Oct 27 20:02:53 2017
