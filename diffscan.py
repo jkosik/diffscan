@@ -91,8 +91,6 @@ version_files()
 print("Dir /outputs after versioning: ",os.listdir("outputs"))
 
 scan('jk')
-print("Dir /outputs after scan: ",os.listdir("outputs"))
-
 compare('jk')
 
 remove_mess()
