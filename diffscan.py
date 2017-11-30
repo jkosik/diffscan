@@ -103,8 +103,6 @@ print("Configs available: ", targets)
 version_files()
 print("Dir /outputs after versioning: ",os.listdir("outputs"))
 
-scan('jk')
-compare('jk')
 scan('as1902')
 compare('as1902')
 
