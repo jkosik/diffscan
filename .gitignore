@@ -8,5 +8,5 @@
 !./outputs/test.out
 
 ./vault/*
-
+!./vault/vault.py-sample
 
