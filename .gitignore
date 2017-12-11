@@ -1,12 +1,12 @@
-./configs/*
-!./configs/test.conf
+/configs/*
+/configs/test.conf
 
-./history/*
+/history/*
 !./history/placeholder
 
-./outputs/*
+/outputs/*
 !./outputs/test.out
 
-./vault/*
+/vault/*
 !./vault/vault.py-sample
 
