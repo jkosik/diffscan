@@ -6,7 +6,5 @@ history/*
 
 outputs/*
 !outputs/test.out
-!outputs/test.out.old
 
-vault/*
-!vault/vault.py-sample
+#vault/*

@@ -70,6 +70,7 @@ def compare(target):
 
         '''print for slack'''
         text = "*Target - {0}*: Nothing to compare yet. Full scan results:\n".format(target)
+        print(text)
         with open (new, "r") as myfile2:
             newfile=myfile2.readlines()
         for i in newfile:
@@ -103,8 +104,8 @@ print("Configs available: ", targets)
 version_files()
 print("Dir /outputs after versioning: ",os.listdir("outputs"))
 
-scan('as1902')
-compare('as1902')
+scan('test')
+compare('test')
 
 remove_mess()
 print("Dir /outputs after cleanup: ",os.listdir("outputs"))
