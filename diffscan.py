@@ -52,7 +52,7 @@ def compare(target):
             for i in newfile:
                 text += (i)
             url = SLACK_WEBHOOK
-            data = {"channel":"#secbots", "username":"DIFFSCAN", "text":text, "icon_emoji":":pentest:"}
+            data = {"channel":"#sec_va_pentest", "username":"DIFFSCAN", "text":text, "icon_emoji":":pentest:"}
             headers = {'Content-type': 'application/json'}
             r = requests.post(url, data=json.dumps(data), headers=headers)
         else:
@@ -61,7 +61,7 @@ def compare(target):
             '''print for slack'''
             url = SLACK_WEBHOOK
             text_nonew = "*Target - {0}:* No new records found in the last scan.".format(target)
-            data = {"channel":"#secbots", "username":"DIFFSCAN", "text":text_nonew, "icon_emoji":":pentest:"}
+            data = {"channel":"#sec_va_pentest", "username":"DIFFSCAN", "text":text_nonew, "icon_emoji":":pentest:"}
             headers = {'Content-type': 'application/json'}
             r = requests.post(url, data=json.dumps(data), headers=headers)
 
@@ -76,7 +76,7 @@ def compare(target):
         for i in newfile:
             text += (i)
         url = SLACK_WEBHOOK
-        data = {"channel":"#secbots", "username":"DIFFSCAN", "text":text, "icon_emoji":":pentest:"}
+        data = {"channel":"#sec_va_pentest", "username":"DIFFSCAN", "text":text, "icon_emoji":":pentest:"}
         headers = {'Content-type': 'application/json'}
         r = requests.post(url, data=json.dumps(data), headers=headers)
 
