@@ -1,12 +1,12 @@
-configs/*
-!configs/test.conf
+./configs/*
+!./configs/test.conf
 
-history/*
-!history/placeholder
+./history/*
+!./history/placeholder
 
-outputs/*
-!outputs/test.out
+./outputs/*
+!./outputs/test.out
 
-./vault/*
+#./vault/*
 
 
