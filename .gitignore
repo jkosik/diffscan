@@ -7,4 +7,6 @@ history/*
 outputs/*
 !outputs/test.out
 
-/vault/*
+vault/vault.py
+
+
