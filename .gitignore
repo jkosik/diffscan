@@ -7,6 +7,6 @@
 ./outputs/*
 !./outputs/test.out
 
-./vault/vault.py
+./vault/*
 !./vault/vault.py-sample
 
