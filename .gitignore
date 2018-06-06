@@ -5,7 +5,7 @@
 !./history/placeholder
 
 /outputs/*
-!./outputs/test.out
+!./outputs/placeholder
 
 /vault/*
 !./vault/vault.py-sample
