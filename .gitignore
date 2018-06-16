@@ -4,8 +4,8 @@
 /history/*
 !./history/placeholder
 
-/outputs/*
-!./outputs/placeholder
+/outputs/
+!./outputs/test/
 
 /vault/*
 !./vault/vault.py-sample
