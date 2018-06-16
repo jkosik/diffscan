@@ -1,13 +1,13 @@
 /configs/*
-!./configs/test.conf
+!/configs/test.conf
 
 /history/*
-!./history/placeholder
+!/history/placeholder
 
 /outputs/*
-!./outputs/test/
-!./outputs/test/placeholder
+!/outputs/test/
+!/outputs/test/placeholder
 
 /vault/*
-!./vault/vault.py-sample
+!/vault/vault.py-sample
 
