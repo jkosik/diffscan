@@ -1,10 +1,10 @@
 /configs/*
-/configs/test.conf
+!./configs/test.conf
 
 /history/*
 !./history/placeholder
 
-/outputs/
+/outputs/*
 !./outputs/test/
 !./outputs/test/placeholder
 
