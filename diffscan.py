@@ -22,7 +22,7 @@ def version_files(target):
         if filename == target+".out": os.rename(abspath+"/"+target+"/"+filename, abspath+"/"+target+"/"+filename+".old") #version only target.out
 
 def scan(target):
-    print("Scanning...")
+    print("Scanning {0}...".format(target))
     cmd = "masscan -c configs/{0}.conf".format(target)
     args = shlex.split(cmd)
     p = subprocess.Popen(args, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -30,7 +30,7 @@ def scan(target):
     
 
 def compare(target):
-    print("Comparing...")
+    print("Comparing with previous scan...")
     url = SLACK_WEBHOOK
     old = "outputs/"+target+"/"+target+".out.old"
     new = "outputs/"+target+"/"+target+".out"
@@ -101,6 +101,7 @@ print("Configs available: ", targets)
 
 targets_to_use = ['as1902'] #add configs to be used
 for i in targets_to_use:
+    print("=== RUNNING DIFFSCAN AGAINST {0} ===".format(i))
     version_files(i)
     scan(i)
     compare(i)
