@@ -6,6 +6,7 @@
 
 /outputs/
 !./outputs/test/
+!./outputs/test/placeholder
 
 /vault/*
 !./vault/vault.py-sample
