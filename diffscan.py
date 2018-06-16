@@ -17,7 +17,7 @@ def version_files(target):
     if not os.path.exists(abspath+"/"+target):
         os.makedirs(abspath+"/"+target)
     for filename in os.listdir(abspath+"/"+target):
-        print("filenames in outputs/target: ", filename)
+#        print("filenames in outputs/target: ", filename)
         if filename != target+".out": os.remove(abspath+"/"+target+"/"+filename) #remove everything but target.out
         if filename == target+".out": os.rename(abspath+"/"+target+"/"+filename, abspath+"/"+target+"/"+filename+".old") #version only target.out
 
@@ -30,13 +30,12 @@ def scan(target):
     
 
 def compare(target):
-    print("Comparing with previous scan...")
+    print("Comparing with the previous scan...")
     url = SLACK_WEBHOOK
     old = "outputs/"+target+"/"+target+".out.old"
     new = "outputs/"+target+"/"+target+".out"
-    print(new, old)
     if os.path.exists(old):
-        print("Comparing {0} and {1}:".format(old, new))
+        print("Comparing {0} and {1}".format(old, new))
         with open (old, "r") as myfile1:
             oldfile=myfile1.readlines()
         with open (new, "r") as myfile2:
