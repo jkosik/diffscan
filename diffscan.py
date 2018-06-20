@@ -25,17 +25,17 @@ def scan(target):
     print("Scanning {0}...".format(target))
     cmd1 = "nmap -Pn -iL configs/{0}.conf --top-ports 10 -oG outputs/{0}/{0}.out --open".format(target)
     cmd2 = "sed -i '/Ports/!d' outputs/{0}/{0}.out".format(target)
-    cmd3 = "cp outputs/{0}/{0}.out outputs/{0}/{0}.out-tmp".format(target) # cut can not easily cut in place
-    #cmd4 = "cut -d'/' -f1-5 outputs/{0}/{0}.out-tmp > outputs/{0}/{0}.out".format(target) #would not run within subprocess.check_call
-    cmd4 = "cut -d'/' -f1-5 outputs/{0}/{0}.out-tmp".format(target) # cut can not easily cut in place. stdout managed by subprocess.Popen
-    cmd5 = "rm outputs/{0}/{0}.out-tmp".format(target) # cut can not easily cut in place
+    cmd3 = "sed -i 's/Ignored.*$//' outputs/{0}/{0}.out".format(target)
     subprocess.check_call(shlex.split(cmd1))
+    shutil.copyfile("outputs/"+target+"/"+target+".out", "history/"+target+".out."+str(datetime.datetime.now().strftime('%Y%m%d-%H%M%S')+".raw")) #backup also raw scan
+
     subprocess.check_call(shlex.split(cmd2))
     subprocess.check_call(shlex.split(cmd3))
-    out_file_path = "outputs/{0}/{0}.out".format(target) #check_call not usable when stdout needs to be send to file 
-    out_file = open(out_file_path, 'w+')
-    subprocess.Popen(shlex.split(cmd4), stdout=out_file, stderr=subprocess.PIPE)
-    subprocess.check_call(shlex.split(cmd5))
+
+#subprocess.check_call dost not allow to redirect stdout to file (>). Use Popen instead:
+#    out_file_path = "outputs/{0}/{0}.out".format(target)
+#    out_file = open(out_file_path, 'w+')
+#    subprocess.Popen(shlex.split(cmdX), stdout=out_file, stderr=subprocess.PIPE)
 
 def compare(target):
     print("Comparing with the previous scan...")
