@@ -79,13 +79,12 @@ def compare(target):
 
     else:
         print("Older scan results not found. Nothing to compare.")
-        '''print for slack'''
         text = "*Target - {0}*: Nothing to compare yet. Full scan results:\n".format(target)
-        print(text)
         with open (new, "r") as myfile2:
             newfile=myfile2.readlines()
         for i in newfile:
             text += (i)
+        print(text)
         data = {"channel":SLACK_CHANNEL, "username":"DIFFSCAN", "text":text, "icon_emoji":":pentest:"}
         headers = {'Content-type': 'application/json'}
         r = requests.post(url, data=json.dumps(data), headers=headers)
